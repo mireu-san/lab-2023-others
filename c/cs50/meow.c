@@ -7,3 +7,9 @@ int main(void)
         printf("meow\n");
     }
 }
+
+// basic for loop syntax in C
+// for (initialization; condition; increment/decrement)
+// {
+//     // code to be executed repeatedly
+// }
