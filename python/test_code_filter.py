@@ -7,3 +7,9 @@ print(filtered_removal)
 
 multiple_removal = [x for x in raw_list if x not in ["us", "kr"]]
 print(multiple_removal)
+
+sort_ascending = sorted(raw_list, reverse=False)
+print(sort_ascending)
+
+sort_descending = sorted(raw_list, reverse=True)
+print(sort_descending)
