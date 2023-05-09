@@ -9,3 +9,7 @@ for i, child in enumerate(children):
 # list comprehension (renewed)
 result = list(enumerate(children, 1))
 print(result)
+
+# wrong example to use map here.
+# Why? Because enumerate is bulit-in python function.
+# result = list(map(enumerate(children, 1)))
