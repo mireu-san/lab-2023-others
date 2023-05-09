@@ -16,5 +16,5 @@ print(result)
 # then that lambda function returns a tuple of index, which incremented by 1,
 # And then, the corresponding value from the list, children.
 
-# tl;dr - x:, which is part of lambda function. It defines the input parameter,
+# tl;dr - x:, which is part of lambda function.It defines the input parameter.
 # (x[0]+1, x[1]), which defines the output of the lambda function.
