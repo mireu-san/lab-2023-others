@@ -32,4 +32,4 @@ bookshelf = [
 
 
 for book in bookshelf:
-    print(bookshelf)
+    print(book)
