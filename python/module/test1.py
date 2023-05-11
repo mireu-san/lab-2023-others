@@ -10,3 +10,9 @@ def hello():
 
 class Human:
     pass
+
+
+import test1
+
+print(test1.name)
+print(test1.hello())
