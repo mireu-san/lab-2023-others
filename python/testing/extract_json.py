@@ -1,9 +1,15 @@
+# https://www.pythontutorial.net/python-basics/python-write-text-file/
+# https://stackoverflow.com/questions/12309269/how-do-i-write-json-data-to-a-file
+
+import json
+
+
 def writefile(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        output = {"a": args[0], "b": args[1], "a+b": result}
-        with open("result.txt", "w") as file:
-            file.write(str(output))
+    def wrapper(a, b):
+        result = func(a, b)
+        data = {"a": a, "b": b, "a+b": result}
+        with open("result.txt", "w") as f:
+            f.write(json.dumps(data, indent=4))
         return result
 
     return wrapper
@@ -12,3 +18,6 @@ def writefile(func):
 @writefile
 def add(a, b):
     return a + b
+
+
+add(10, 20)
