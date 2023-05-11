@@ -5,11 +5,14 @@ age = 14
 
 
 def hello():
-    print("Hello from test1")
+    pass
 
 
 class Human:
     pass
 
 
-print(name)
+import test1
+
+print(test1.name)
+print(test1.hello())

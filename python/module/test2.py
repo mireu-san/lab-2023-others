@@ -1,3 +1,3 @@
-from test1 import name
+import test1
 
-print(name)
+print(test1.name)
