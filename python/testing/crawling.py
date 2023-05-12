@@ -8,6 +8,7 @@ transaction = soup.select(
     "h2#pagevolumewhereamountexist(censored) + h3 + table > tbody tr td:nth-child(7) span"
 )
 
+# list comprehension & generation expression
 total_amount = sum(int(amount.text.replace(",", "")) for amount in transaction)
 
 print(f"예시 페이지 내 거래총량은 {total_amount:,} 회입니다.")
