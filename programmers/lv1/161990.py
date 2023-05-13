@@ -1,3 +1,15 @@
+def solution(wallpaper):
+    x_axis = []
+    y_axis = []
+
+    for i in range(len(wallpaper)):
+        for j in range(len(wallpaper[0])):
+            if wallpaper[i][j] == "#":
+                x_axis.append(i)
+                y_axis.append(j)
+    return [min(x_axis), min(y_axis), max(x_axis) + 1, max(y_axis) + 1]
+
+
 # def solution(wallpaper):
 #     x_axis = []
 #     y_axis = []
