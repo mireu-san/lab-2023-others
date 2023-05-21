@@ -8,6 +8,6 @@ def indexing_list(characters):
 
 
 if __name__ == "__main__":
-    genshin = ["greetings", "traveller!", "welcometoteyvatandtravelwithpaimon"]
-    target_list = indexing_list(genshin)
+    paimon = ["greetings", "traveller!", "welcometoteyvatandtravelwithpaimon"]
+    target_list = indexing_list(paimon)
     print(target_list)
