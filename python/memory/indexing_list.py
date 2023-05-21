@@ -1,6 +1,6 @@
-def indexing_list(words):
+def indexing_list(characters):
     target_list = ""
-    for word in words:
+    for word in characters:
         if len(word) > len(target_list):
             target_list = word
 
@@ -8,6 +8,6 @@ def indexing_list(words):
 
 
 if __name__ == "__main__":
-    words = ["greetings", "traveller!", "welcometoteyvatandtravelwithpaimon"]
-    target_list = indexing_list(words)
+    genshin = ["greetings", "traveller!", "welcometoteyvatandtravelwithpaimon"]
+    target_list = indexing_list(genshin)
     print(target_list)
