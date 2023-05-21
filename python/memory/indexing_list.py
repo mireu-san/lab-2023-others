@@ -1,8 +1,8 @@
 def indexing_list(characters):
     target_list = ""
-    for word in characters:
-        if len(word) > len(target_list):
-            target_list = word
+    for character in characters:
+        if len(character) > len(target_list):
+            target_list = character
 
     return target_list
 
