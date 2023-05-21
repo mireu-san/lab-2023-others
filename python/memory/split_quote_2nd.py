@@ -1,19 +1,19 @@
-sentence = "This is how to pick out only the beginning letter"
+sentence = "This is how to pick out only the beginning word"
 
 # Create a variable to store the current word.
 current_word = ""
 
-# Create a variable to store the beginning letter of the current word.
+# Create a variable to store the beginning word of the current word.
 extractor = ""
 
 # Loop over the characters in the sentence.
 for character in sentence:
     # If the current character is a space, then it can reach to the end of the current word.
     if character == " ":
-        # Print the beginning letter of the current word.
+        # Print the beginning word of the current word.
         print(extractor)
 
-        # Reset the current word and beginning letter variables.
+        # Reset the current word and beginning word variables.
         current_word = ""
         extractor = ""
 
@@ -22,8 +22,8 @@ for character in sentence:
         # Add the current character to the current word.
         current_word += character
 
-        # Set the beginning letter of the current word to the current character.
+        # Set the beginning word of the current word to the current character.
         extractor = character
 
-# Print the beginning letter of the last word.
+# Print the beginning word of the last word.
 print(extractor)
