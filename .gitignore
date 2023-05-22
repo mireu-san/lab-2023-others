@@ -1,4 +1,5 @@
 /node_modules
+/tailwind/node_modules
 /coverage
 /cli
 /lib
