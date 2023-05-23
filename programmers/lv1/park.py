@@ -1,4 +1,7 @@
 # 172928
+# grid indexing
+
+
 def solution(park, routes):
     # First, find the starting position of the robot dog in the park.
     for i in range(len(park)):
