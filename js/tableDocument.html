@@ -50,31 +50,19 @@
         ]
         const dataTable = document.querySelector('#dataTable > tbody')
         const tableBodyData = []
-        tableBodyData.push(`
-            <tr>
-                <td>${data[0]['id']}</td>
-                <td>${data[0]['name']}</td>
-                <td>${data[0]['price']}</td>
-                <td>${data[0]['count']}</td>
-            </tr>
-        `)
-        tableBodyData.push(`
-            <tr>
-                <td>${data[1]['id']}</td>
-                <td>${data[1]['name']}</td>
-                <td>${data[1]['price']}</td>
-                <td>${data[1]['count']}</td>
-            </tr>
-        `)
-        tableBodyData.push(`
-            <tr>
-                <td>${data[2]['id']}</td>
-                <td>${data[2]['name']}</td>
-                <td>${data[2]['price']}</td>
-                <td>${data[2]['count']}</td>
-            </tr>
-        `)
+
+        for (const i of data) {
+            tableBodyData.push(`
+                <tr>
+                    <td>${i['id']}</td>
+                    <td>${i['name']}</td>
+                    <td>${i['price']}</td>
+                    <td>${i['count']}</td>
+                </tr>
+            `)
+        }
         
+
         dataTable.innerHTML = tableBodyData.join('')
     </script>
 </body>
