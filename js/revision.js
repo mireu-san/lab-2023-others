@@ -24,3 +24,11 @@ const result = max_min_sum(arr);
 console.log(result); // [40, 10, 100]
 
 // let circleArea = (x) => Math.PI * x ** 2;
+
+// using Math is recommended
+// let f7 = (a, b, c, d) => {
+//     max = Math.max(a, b, c, d)
+//     min = Math.min(a, b, c, d)
+//     sum = a + b + c + d
+//     return [max, min, sum]
+// }
