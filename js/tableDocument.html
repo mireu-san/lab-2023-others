@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <title>table and document</title>
+    <title>title</title>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,63 +17,65 @@
     <table id="dataTable">
         <thead>
             <tr>
-                <td>책번호</td>
-                <td>책이름</td>
-                <td>책가격</td>
-                <td>책판매권수</td>
+                <td>book number</td>
+                <td>book name</td>
+                <td>book price</td>
+                <td>book sold count</td>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table>
     <script>
-        // <tr>
-        //     <td>1</td>
-        //     <td>Python</td>
-        //     <td>1,000</td>
-        //     <td>100</td>
-        // </tr>
-        // <tr>
-        //     <td>2</td>
-        //     <td>JavaScript</td>
-        //     <td>2,000</td>
-        //     <td>200</td>
-        // </tr>
-        // <tr>
-        //     <td>3</td>
-        //     <td>HTML, CSS</td>
-        //     <td>3,000</td>
-        //     <td>300</td>
-        // </tr>
+        // suppose this data is fetched from external (e.g. api)
+        let data = [
+            {
+                id: 1,
+                name: 'Python',
+                price: 1000,
+                count: 100
+            },
+            {
+                id: 2,
+                name: 'JavaScript',
+                price: 2000,
+                count: 200
+            },
+            {
+                id: 3,
+                name: 'HTML, CSS',
+                price: 3000,
+                count: 300
+            }
+        ]
         const dataTable = document.querySelector('#dataTable > tbody')
         const tableBodyData = []
         tableBodyData.push(`
             <tr>
-                <td>1</td>
-                <td>Python</td>
-                <td>1,000</td>
-                <td>100</td>
+                <td>${data[0]['id']}</td>
+                <td>${data[0]['name']}</td>
+                <td>${data[0]['price']}</td>
+                <td>${data[0]['count']}</td>
             </tr>
         `)
         tableBodyData.push(`
             <tr>
-                <td>2</td>
-                <td>JavaScript</td>
-                <td>2,000</td>
-                <td>200</td>
+                <td>${data[1]['id']}</td>
+                <td>${data[1]['name']}</td>
+                <td>${data[1]['price']}</td>
+                <td>${data[1]['count']}</td>
             </tr>
         `)
         tableBodyData.push(`
             <tr>
-                <td>3</td>
-                <td>HTML, CSS</td>
-                <td>3,000</td>
-                <td>300</td>
+                <td>${data[2]['id']}</td>
+                <td>${data[2]['name']}</td>
+                <td>${data[2]['price']}</td>
+                <td>${data[2]['count']}</td>
             </tr>
         `)
         
-        
-        dataTable.innerHTML = ``
+        dataTable.innerHTML = tableBodyData.join('')
     </script>
 </body>
 </html>
