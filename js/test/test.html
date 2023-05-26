@@ -8,17 +8,33 @@
 </head>
 <body>
     <script>
-        fetch('https://raw.githubusercontent.com/mireu-san/lab-2023-others/master/js/test/test.js', {
-            headers: {
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
-            .then(data => data.js)
+        // fetch('https://raw.githubusercontent.com/mireu-san/lab-2023-others/master/js/test/test.js', {
+        //     headers: {
+        //         'Access-Control-Allow-Origin': '*'
+        //     }
+        // })
+        //     .then(data => data.js)
+        //     .then(data => {
+        //         document.createElement('ol')
+        //     })
+        //     .catch(error => {
+        //         alert('No data could be loaded')
+        //     })
+
+        fetch('https://raw.githubusercontent.com/mireu-san/lab-2023-others/master/js/test/data.json')
+            .then(data => data.json())
             .then(data => {
-                document.createElement('ol')
+                const body = document.querySelector('body')
+                const orderPopulation = document.createElement('ol')
+                for (const i of data) {
+                    const local = document.createElement('li')
+                    local.innerText = i.지역이름 + i.인구
+                    orderPopulation.append(local)
+                }
+                body.append(orderPopulation)
             })
             .catch(error => {
-                alert('No data could be loaded')
+                alert('데이터가 읽히지 않습니다.')
             })
     </script>
 </body>
