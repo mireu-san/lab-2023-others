@@ -1,0 +1,153 @@
+<!-- 수정을 구현 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+    <title>CRUD feature</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            main {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            input {
+                display: block;
+                width: 300px;
+                height: 30px;
+                margin-bottom: 10px;
+            }
+
+            textarea {
+                display: block;
+                width: 300px;
+                height: 300px;
+                margin-bottom: 10px;
+            }
+
+            button {
+                display: block;
+                width: 306px;
+                height: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <section>
+                <input type="text" name="" id="title" />
+                <textarea name="" id="content" cols="30" rows="10"></textarea>
+                <button onclick="saveNote()">메모</button>
+            </section>
+            <section id="display"></section>
+        </main>
+        <script>
+            let allMemo = JSON.parse(localStorage.getItem("allMemo"));
+            allMemo = allMemo ?? [];
+            let updatingMemoIndex = null; // 현재 수정 중인 메모의 인덱스를 저장
+
+            // title과 content 필드에 onchange 이벤트 리스너 추가
+            document.getElementById("title").onchange = function() {
+                if (updatingMemoIndex !== null) {
+                    allMemo[updatingMemoIndex].title = this.value;
+                    localStorage.setItem("allMemo", JSON.stringify(allMemo));
+                    render();
+                }
+            }
+
+            document.getElementById("content").onchange = function() {
+                if (updatingMemoIndex !== null) {
+                    allMemo[updatingMemoIndex].content = this.value;
+                    localStorage.setItem("allMemo", JSON.stringify(allMemo));
+                    render();
+                }
+            }
+
+            function saveNote() {
+                const title = document.getElementById("title").value;
+                const content = document.getElementById("content").value;
+
+                allMemo.push({ title, content, len: allMemo.length });
+
+                localStorage.setItem("allMemo", JSON.stringify(allMemo));
+                render();
+            }
+
+            function render() {
+                const display = document.getElementById("display");
+                display.innerHTML = "";
+
+                // // 최신 게시물이 위로 올라오도록
+                // for (let i = allMemo.length; i > 0 ; i--) {
+                //     // 아래와 유사 코드
+                // }
+
+                for (const item of allMemo) {
+                    const saveTitle = document.createElement("h2");
+                    const saveContent = document.createElement("p");
+                    const saveId = document.createElement("p");
+                    const updateMemo = document.createElement("button");
+                    const deleteMemoBtn = document.createElement("button");
+
+                    saveTitle.textContent = item.title;
+                    saveContent.textContent = item.content;
+                    saveId.textContent = item.len + 1;
+                    updateMemo.textContent = "수정";
+
+                    updateMemo.onclick = function() {
+                        // '수정' 버튼을 눌렀을 때 새로운 입력 필드와 '확인' 버튼 생성
+                        const newTitleInput = document.createElement("input");
+                        newTitleInput.value = item.title;
+                        const newContentInput = document.createElement("textarea");
+                        newContentInput.value = item.content;
+                        const confirmButton = document.createElement("button");
+                        confirmButton.textContent = "확인";
+                        
+                        confirmButton.onclick = function() {
+                            // '확인' 버튼을 눌렀을 때 변경 사항을 저장하고 새로운 입력 필드와 버튼을 제거
+                            item.title = newTitleInput.value;
+                            item.content = newContentInput.value;
+                            localStorage.setItem("allMemo", JSON.stringify(allMemo));
+                            render();
+                        }
+
+                        // 새로운 입력 필드와 버튼을 메모에 추가
+                        this.parentNode.insertBefore(newTitleInput, this.nextSibling);
+                        this.parentNode.insertBefore(newContentInput, newTitleInput.nextSibling);
+                        this.parentNode.insertBefore(confirmButton, newContentInput.nextSibling);
+                    }
+
+                    deleteMemoBtn.textContent = "삭제";
+                    deleteMemoBtn.setAttribute("id", item.len);
+                    deleteMemoBtn.setAttribute("onclick", "remove()");
+
+                    display.appendChild(saveId);
+                    display.appendChild(saveTitle);
+                    display.appendChild(saveContent);
+                    display.appendChild(updateMemo);
+                    display.appendChild(deleteMemoBtn);
+                }
+            }
+
+            function remove() {
+                // console.log(event.srcElement.id);
+                // console.log(allMemo);
+                const idx = allMemo.find(
+                    (item) => item.len == event.srcElement.id
+                );
+                if (idx) {
+                    allMemo.splice(
+                        allMemo.findIndex((item) => item.len == idx.len),
+                        1
+                    );
+                }
+                localStorage.setItem("allMemo", JSON.stringify(allMemo));
+                render();
+            }
+        </script>
+    </body>
+</html>
