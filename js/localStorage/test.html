@@ -46,7 +46,7 @@
         <script>
             let allMemo = JSON.parse(localStorage.getItem("allMemo"));
             allMemo = allMemo ?? [];
-            let updatingMemoIndex = null; // 현재 수정 중인 메모의 인덱스를 저장
+            let updatingMemoIndex = null; // 현재 수정 중인 메모 저장
 
             // title과 content 필드에 onchange 이벤트 리스너 추가
             document.getElementById("title").onchange = function() {
@@ -132,8 +132,6 @@
             }
 
             function remove() {
-                // console.log(event.srcElement.id);
-                // console.log(allMemo);
                 const idx = allMemo.find(
                     (item) => item.len == event.srcElement.id
                 );
