@@ -8,7 +8,18 @@
 </head>
 <body>
     <script>
-        
+        fetch('https://raw.githubusercontent.com/mireu-san/lab-2023-others/master/js/test/test.js', {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+            .then(data => data.js)
+            .then(data => {
+                document.createElement('ol')
+            })
+            .catch(error => {
+                alert('No data could be loaded')
+            })
     </script>
 </body>
 </html>
