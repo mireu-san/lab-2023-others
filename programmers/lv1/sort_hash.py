@@ -17,3 +17,5 @@ print(
         ["josipa", "filipa", "marina", "nikola"],
     )
 )
+
+# Note: this problem could be solved with hash. need to try this again later.
