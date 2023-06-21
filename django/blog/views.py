@@ -32,12 +32,10 @@ class Index(View):
 # 글 작성 화면
 def write(request):
     if request.method == "POST":
-        # form 확인
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save()
-            return redirect("/blog")
-        # if 해서 안 끝나면 else 삽입.
-        # else:
-        form = PostForm()
-        return render(request, "blog/write.html", {"form": form})
+            return redirect("blog:list")
+    # else: 칸 주의
+    form = PostForm()
+    return render(request, "blog/write.html", {"form": form})
