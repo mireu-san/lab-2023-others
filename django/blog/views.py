@@ -23,4 +23,13 @@ class Index(View):
         post_objs = Post.objects.all()
 
         context = {"posts": post_objs}
-        return render(request, "blog/board.html")
+        return render(request, "blog/board.html", context)
+
+
+# write
+# post - form
+def write(request):
+    if request.method == "POST":
+        pass  # 나중에 구현할 작업
+    else:
+        return render(request, "template.html")
