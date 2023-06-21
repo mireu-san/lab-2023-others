@@ -1,4 +1,14 @@
+// {
+//     "python.formatting.provider": "black",
+//     "files.associations": {
+//         "stdio.h": "c"
+//     }
+// }
+
 {
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
     "python.formatting.provider": "black",
     "files.associations": {
         "stdio.h": "c"
