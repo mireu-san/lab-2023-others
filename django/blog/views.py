@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 from .models import Post
+from .forms import PostForm
 
 # Create your views here.
 # def index(request):
@@ -28,8 +29,15 @@ class Index(View):
 
 # write
 # post - form
+# 글 작성 화면
 def write(request):
     if request.method == "POST":
-        pass  # 나중에 구현할 작업
-    else:
-        return render(request, "template.html")
+        # form 확인
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save()
+            return redirect("/blog")
+        # if 해서 안 끝나면 else 삽입.
+        # else:
+        form = PostForm()
+        return render(request, "blog/write.html", {"form": form})
