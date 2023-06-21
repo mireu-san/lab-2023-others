@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
+from django.views.generic import ListView, CreateView, DetailView
 from .models import Post
 from .forms import PostForm
+from django.urls import reverse_lazy
 
 # Create your views here.
 # def index(request):
@@ -40,3 +42,25 @@ def write(request):
     # & beware of indentation
     form = PostForm()
     return render(request, "blog/write.html", {"form": form})
+
+
+# Django 자체의 클래스 뷰 기능도 강력, 편리
+# model, template_name, context_object_name,
+# paginate_by, form_class, form_valid(), get_queryset()
+# django.views.generic -> ListView
+class List(ListView):
+    model = Post  # model
+    template_name = "blog/post_list.html"  # template
+    context_object_name = "posts"  # name of variable value
+
+
+class Write(CreateView):
+    model = Post  # model
+    form_class = PostForm  # form
+    success_url = reverse_lazy("blog:list")  # url to send when succeed
+
+
+class Detail(DetailView):
+    model = Post
+    template_name = "blog/post_detail.html"
+    context_object_name = "post"  # name of variable = "post"
