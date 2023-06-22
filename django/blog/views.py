@@ -8,8 +8,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Post
-from .forms import PostForm
+from .models import Post, Comment
+from .forms import PostForm, CommentForm
 from django.urls import reverse_lazy, reverse
 
 # Create your views here.
@@ -97,3 +97,37 @@ class Delete(DeleteView):  # 지우는 화면 따로 구성할 필요는 없음.
     model = Post  # Post 에 있는 값을 지울예정
     success_url = reverse_lazy("blog:list")
     # 어디서 실행 시킬까? 상세페이지 내부에서.
+
+
+class DetailView(View):
+    def get(self, request, post_id):  # post_id: DB post_id 테이블 이름 사용하고 싶어서.
+        pass  # list -> object 상세 페이지 이동 -> 상세 페이지 하나의 내용
+        # pk 값을 왔다 갔다, 하나의 인자.
+
+        # 데이터베이스 방문
+        # 해당 글(가져옴)
+        # 장고 ORM (pk: 무조건 pk로 작성해야한다.)
+        post = Post.objects.get(pk=post_id)
+        # 이 글에 해당하는 댓글도 가져옴
+        comments
+        pass
+
+
+### Comment
+class CommentWrite(View):
+    # def get(self, request):
+    #     pass
+    def post(self, request, post_id):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            # 사용자에게 댓글 내용 받아옴
+            content = form.cleaned_data["content"]
+            # 해당 아이디에 해당하는 글 불러옴
+            post = Post.objects.get(pk=post_id)
+            # 댓글 객체 생성
+            # 앞은 인자, 뒤는 값. post=post. 이렇게 지정 해 둠으로서 id 가 들어옴.
+            comment = Comment.objects.create(
+                post=post,
+                content=content,
+            )
+            return redirect("blog:list", pk="post_id")
