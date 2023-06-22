@@ -1,8 +1,12 @@
-{% extends 'blog/base.html' %}
-
-{% block content %}
+{% extends 'blog/base.html' %} {% block content %}
 <h1>제목:{{ post.title }}</h1>
 <p>내용:{{ post.content }}</p>
 <p>작성자:{{ post.writer }}</p>
 <p>작성일:{{ post.created_at }}</p>
+{% comment %} 현재 URL 미설정,미구현 {% endcomment %}
+<a href="{% url 'blog:edit' pk=post.pk %}">수정</a>
+<form action="{% url 'blog:delete' pk=post.pk %}" method="post">
+  {% csrf_token %}
+  <input type="submit" value="삭제" />
+</form>
 {% endblock %}
