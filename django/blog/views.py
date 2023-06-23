@@ -71,26 +71,34 @@ class Detail(DetailView):
     template_name = "blog/post_detail.html"
     context_object_name = "post"  # name of variable = "post"
 
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     post = self.get_object()
+    #     comments = Comment.objects.filter(post=post)
+    #     context["comments"] = comments
+    #     return context
+
 
 class Update(UpdateView):
     model = Post
     template_name = "blog/post_edit.html"
     fields = ["title", "content"]
-    # success_url = reverse_lazy("blog:list")
 
-    # initial 기능 사용 -> form 에 값을 미리 넣어주기 위해서 # reset 아님. initial.
     def get_initial(self):
-        # super = approaching parent class to inherit it
-        initial = super().get_initial()  # updateView(generic view)에서 제공하는 initial 딕셔너리.
-        post = self.get_object()  # pk 기반으로.
+        initial = super().get_initial()
+        post = self.get_object()
         initial["title"] = post.title
         initial["content"] = post.content
         return initial
 
     def get_success_url(self):
-        post = self.get_object()  # pk 기반으로 현재 객체 가져오기 # self 는 class 로 만든, 현재 찍어준 객체
-        # return reverse_lazy("blog:detail", kwargs={"pk: post.pk"})
+        post = self.get_object()
         return reverse("blog:detail", kwargs={"pk": post.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = self.get_form()  # make sure the form is in the context
+        return context
 
 
 class Delete(DeleteView):  # 지우는 화면 따로 구성할 필요는 없음.
@@ -100,34 +108,45 @@ class Delete(DeleteView):  # 지우는 화면 따로 구성할 필요는 없음.
 
 
 class DetailView(View):
-    def get(self, request, post_id):  # post_id: DB post_id 테이블 이름 사용하고 싶어서.
-        pass  # list -> object 상세 페이지 이동 -> 상세 페이지 하나의 내용
-        # pk 값을 왔다 갔다, 하나의 인자.
+    def get(self, request, pk):
+        # Get the post
+        post = Post.objects.get(pk=pk)
 
-        # 데이터베이스 방문
-        # 해당 글(가져옴)
-        # 장고 ORM (pk: 무조건 pk로 작성해야한다.)
-        post = Post.objects.get(pk=post_id)
-        # 이 글에 해당하는 댓글도 가져옴
-        comments
-        pass
+        # Get the comments for the post
+        comments = Comment.objects.filter(post=post)
+
+        # Create an instance of the form (in this example, I am assuming CommentForm)
+        form = CommentForm()
+
+        # Include the form in the context
+        context = {"post": post, "comments": comments, "form": form}
+
+        # Render the template
+        return render(request, "blog/post_detail.html", context)
 
 
 ### Comment
 class CommentWrite(View):
-    # def get(self, request):
-    #     pass
-    def post(self, request, post_id):
+    def post(self, request, pk):
         form = CommentForm(request.POST)
         if form.is_valid():
-            # 사용자에게 댓글 내용 받아옴
+            # Valid form input
             content = form.cleaned_data["content"]
-            # 해당 아이디에 해당하는 글 불러옴
-            post = Post.objects.get(pk=post_id)
-            # 댓글 객체 생성
-            # 앞은 인자, 뒤는 값. post=post. 이렇게 지정 해 둠으로서 id 가 들어옴.
+            post = Post.objects.get(pk=pk)
             comment = Comment.objects.create(
                 post=post,
                 content=content,
             )
-            return redirect("blog:list", pk="post_id")
+            return redirect("blog:detail", pk=pk)
+        else:
+            # Invalid form input
+            # add a return statement to render an error page
+            # or redirect back to the detail page
+            return redirect("blog:detail", pk=pk)  # Redirecting back as an example
+
+
+class CommentDelete(DeleteView):
+    model = Comment
+
+    def get_success_url(self):
+        return reverse_lazy("blog:detail", kwargs={"pk": self.object.post.pk})

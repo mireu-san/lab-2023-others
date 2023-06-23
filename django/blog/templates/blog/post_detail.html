@@ -3,7 +3,45 @@
 <p>내용:{{ post.content }}</p>
 <p>작성자:{{ post.writer }}</p>
 <p>작성일:{{ post.created_at }}</p>
-{% comment %} 현재 URL 미설정,미구현 {% endcomment %}
+{% comment %} 작성 화면 {% endcomment %}
+<h3>댓글</h3>
+{% comment %}
+<form action="{% url 'blog:cm-write' pk=post.pk %}" method="post">
+  {% csrf_token %} {{ form.field.content }}
+  <input type="submit" value="댓글 작성" />
+</form>
+{% endcomment %}
+
+<form action="{% url 'blog:cm-write' pk=post.pk %}" method="post">
+  {% csrf_token %} {{ form.content }}
+  <input type="submit" value="댓글 작성" />
+</form>
+
+<br />
+{% if comments %}
+<ul>
+  {% for comment in comments %}
+  <!-- 내용, 작성시간, 삭제 버튼 -->
+  <li>
+    <strong>내용:</strong> {{ comment.content }}
+    <br />
+    <strong>작성시간:</strong> {{ comment.created_at }}
+    <!-- 삭제 버튼 -->
+    <form
+      action="{% url 'blog:comment_delete' comment.pk %}"
+      method="post"
+      style="display: inline"
+    >
+      {% csrf_token %}
+      <input type="submit" value="댓글 삭제" />
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>댓글이 없습니다</p>
+{% endif %}
+
 <a href="{% url 'blog:edit' pk=post.pk %}">수정</a>
 <form action="{% url 'blog:delete' pk=post.pk %}" method="post">
   {% csrf_token %}
