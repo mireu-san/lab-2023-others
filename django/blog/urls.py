@@ -26,6 +26,8 @@ urlpatterns = [
     ),
     # 코멘트 삭제
     path(
-        "comment/<int:pk>/delete/", views.CommentDelete.as_view(), name="comment_delete"
+        "detail/<int:pk>/comment/delete/",
+        views.CommentDelete.as_view(),
+        name="comment_delete",
     ),
 ]

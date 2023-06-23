@@ -145,8 +145,20 @@ class CommentWrite(View):
             return redirect("blog:detail", pk=pk)  # Redirecting back as an example
 
 
-class CommentDelete(DeleteView):
-    model = Comment
+# class CommentDelete(DeleteView):
+#     model = Comment
 
-    def get_success_url(self):
-        return reverse_lazy("blog:detail", kwargs={"pk": self.object.post.pk})
+#     def get_success_url(self):
+#         return reverse_lazy("blog:detail", kwargs={"pk": self.object.post.pk})
+
+
+class CommentDelete(View):
+    def post(self, request, pk):
+        # 지울 객체를 찾아야 함 -> 댓글 객체
+        comment = Comment.objects.get(pk=pk)
+        # 상세페이지로 돌아가기
+        post_id = comment.post.id
+        # 삭제
+        comment.delete()
+
+        return redirect("blog:detail", pk=post_id)
