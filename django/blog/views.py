@@ -193,8 +193,16 @@ class HashTagWrite(View):
             pass
 
 
+# class HashTagDelete(View):
+#     def post(self, request, pk):
+#         hashtag = HashTag.objects.get(pk=pk)
+#         hashtag.delete()
+#         return redirect("blog:detail", pk=hashtag.post.pk)
+
+
 class HashTagDelete(View):
     def post(self, request, pk):
         hashtag = HashTag.objects.get(pk=pk)
+        post_id = hashtag.post.id
         hashtag.delete()
-        return redirect("blog:detail", pk=hashtag.post.pk)
+        return redirect("blog:detail", pk=post_id)

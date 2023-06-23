@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import HashTagDelete
 
 # from blog.views import Index
 
@@ -34,4 +35,6 @@ urlpatterns = [
     path(
         "detail/<int:pk>/hashtag/write/", views.HashTagWrite.as_view(), name="tag-write"
     ),
+    # 태그 삭제
+    path("hashtag/<int:pk>/delete/", HashTagDelete.as_view(), name="hashtag_delete"),
 ]
