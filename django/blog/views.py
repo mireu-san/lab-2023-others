@@ -189,6 +189,12 @@ class HashTagWrite(View):
             hashtag.save()
             return redirect("blog:detail", pk=post.pk)
         else:
-            # 폼에 문제가 있다면, 오류 메시지를 처리하는 로직이 필요합니다.
-            # 예를 들어, 오류 메시지를 사용자에게 표시할 수 있습니다.
+            # 폼에 문제가 있다면, 오류 메시지를 출력합니다.
             pass
+
+
+class HashTagDelete(View):
+    def post(self, request, pk):
+        hashtag = HashTag.objects.get(pk=pk)
+        hashtag.delete()
+        return redirect("blog:detail", pk=hashtag.post.pk)
