@@ -30,4 +30,8 @@ urlpatterns = [
         views.CommentDelete.as_view(),
         name="comment_delete",
     ),
+    # 태그 작성
+    path(
+        "detail/<int:pk>/hashtag/write/", views.HashTagWrite.as_view(), name="tag-write"
+    ),
 ]

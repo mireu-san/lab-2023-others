@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views import View
 from django.views.generic import (
@@ -8,8 +8,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Post, Comment
-from .forms import PostForm, CommentForm
+from .models import Post, Comment, HashTag
+from .forms import PostForm, CommentForm, HashTagForm
 from django.urls import reverse_lazy, reverse
 
 # Create your views here.
@@ -115,11 +115,24 @@ class DetailView(View):
         # Get the comments for the post
         comments = Comment.objects.filter(post=post)
 
+        # hashtag
+        # 이 post 는 hashtag 에 해당되는 것만 가져올 예정.
+        hashtags = HashTag.objects.filter(post=post)
+
         # Create an instance of the form (in this example, I am assuming CommentForm)
-        form = CommentForm()
+        comment_form = CommentForm()
+
+        hashtag_form = HashTagForm()
 
         # Include the form in the context
-        context = {"post": post, "comments": comments, "form": form}
+        # context = {"post": post, "comments": comments, "form": form}
+        context = {
+            "post": post,
+            "comments": comments,
+            "hashtags": hashtags,
+            "comment_form": comment_form,
+            "hashtag_form": hashtag_form,
+        }
 
         # Render the template
         return render(request, "blog/post_detail.html", context)
@@ -162,3 +175,20 @@ class CommentDelete(View):
         comment.delete()
 
         return redirect("blog:detail", pk=post_id)
+
+
+### HashTag
+class HashTagWrite(View):
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        form = HashTagForm(request.POST)
+
+        if form.is_valid():
+            hashtag = form.save(commit=False)
+            hashtag.post = post
+            hashtag.save()
+            return redirect("blog:detail", pk=post.pk)
+        else:
+            # 폼에 문제가 있다면, 오류 메시지를 처리하는 로직이 필요합니다.
+            # 예를 들어, 오류 메시지를 사용자에게 표시할 수 있습니다.
+            pass

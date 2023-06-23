@@ -1,6 +1,6 @@
 # blog/forms.py
 from django import forms
-from .models import Post, Comment
+from .models import Post, Comment, HashTag
 
 
 # Form ()
@@ -16,3 +16,9 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ["content"]
         widgets = {"content": forms.Textarea(attrs={"rows": "10", "cols": "5"})}
+
+
+class HashTagForm(forms.ModelForm):
+    class Meta:
+        model = HashTag
+        fields = ["name"]
