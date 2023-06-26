@@ -1,5 +1,3 @@
-import os
-
 """
 Django settings for app project.
 
@@ -17,7 +15,6 @@ from pathlib import Path
 # Auth user
 AUTH_USER_MODEL = "user.User"
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-%aawsk9ecf9rjbu_a^hr=bz3ae8&g0x8yg&da14^jz8*pvh5m_"
+SECRET_KEY = "django-insecure-9@o$2xraddb1(&2zw%pzgj^fyjd(vixj0#&^u4(=kj**+^^x56"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -43,8 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "blog",  # 내가 만든 앱 추가
-    "user",  # 내가 만든 앱 추가
+    "blog",  # 내가 만든 앱을 추가
+    "user",
 ]
 
 MIDDLEWARE = [
@@ -62,7 +59,7 @@ ROOT_URLCONF = "app.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [BASE_DIR / "templates"],  # myapp/templates
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
