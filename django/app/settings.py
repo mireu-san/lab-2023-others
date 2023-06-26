@@ -1,3 +1,5 @@
+import os
+
 """
 Django settings for app project.
 
@@ -14,6 +16,7 @@ from pathlib import Path
 
 # Auth user
 AUTH_USER_MODEL = "user.User"
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -59,7 +62,7 @@ ROOT_URLCONF = "app.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # myapp/templates
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
