@@ -5,7 +5,7 @@ app_name = "user"
 
 urlpatterns = [
     # user/
-    path("", views.Registration.as_view(), name="register"),
+    # 회원가입
     path("register/", views.Registration.as_view(), name="register"),
     # 로그인
     path("login/", views.Login.as_view(), name="login"),
