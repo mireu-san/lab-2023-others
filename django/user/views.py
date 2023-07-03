@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
-from .models import User
+
+# from .models import User
 from .forms import RegisterForm, LoginForm
 
 # Create your views here.
@@ -27,9 +28,9 @@ class Registration(View):
             user = form.save()
             # 로그인한 다음 이동
             return redirect("blog:list")
-        else:
-            context = {"form": form}
-            return render(request, "user/user_register.html", context)
+        # else:
+        #     context = {"form": form}
+        #     return render(request, "user/user_register.html", context)
 
 
 ### Login

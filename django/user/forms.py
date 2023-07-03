@@ -1,4 +1,3 @@
-from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 # from .models import User
@@ -11,7 +10,8 @@ User = get_user_model()
 class RegisterForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ["email", "name", "password"]
+        # fields = ["email", "name", "password"]
+        fields = UserCreationForm.Meta.fields + ("email",)
 
 
 # class LoginForm(forms.ModelForm):
@@ -20,8 +20,9 @@ class RegisterForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
     class Meta:
         model = User
-        fields = ["email", "password"]
-        widgets = {
-            "email": forms.EmailInput(attrs={"placeholder": "email"}),
-            "password": forms.PasswordInput(attrs={"placeholder": "password"}),
-        }
+
+    # fields = ["email", "password"]
+    #  widgets = {
+    #     "email": forms.EmailInput(attrs={"placeholder": "email"}),
+    #     "password": forms.PasswordInput(attrs={"placeholder": "password"}),
+    #  }

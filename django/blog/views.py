@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 from django.views.generic import (
@@ -8,6 +8,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post, Comment, HashTag
 from .forms import PostForm, CommentForm, HashTagForm
 from django.urls import reverse_lazy, reverse
@@ -21,18 +22,19 @@ from django.urls import reverse_lazy, reverse
 #     return HttpResponse('invalid request')
 
 
+### Post
 class Index(View):
     def get(self, request):
         # return HttpResponse('Index page GET class')
 
         # 데이터베이스 접근해서 값 가져오기.
         # 게시판에 글 보여줘야 하므로 DB에서 '값 조회'
-        # all()
-        # context = DB 에서 가져온 값.
+        # MyModel.objects.all()
         post_objs = Post.objects.all()
-
+        # context = DB 에서 가져온 값.
         context = {"posts": post_objs}
-        return render(request, "blog/board.html", context)
+        # print(post_objs) QuerySet<[post 1, 2, 3, 4, 5]>
+        return render(request, "blog/post_list.html", context)
 
 
 # write
@@ -54,16 +56,35 @@ def write(request):
 # model, template_name, context_object_name,
 # paginate_by, form_class, form_valid(), get_queryset()
 # django.views.generic -> ListView
-class List(ListView):
-    model = Post  # model
-    template_name = "blog/post_list.html"  # template
-    context_object_name = "posts"  # name of variable value
+# class List(ListView):
+#     model = Post  # model
+#     template_name = "blog/post_list.html"  # template
+#     context_object_name = "posts"  # name of variable value
 
 
-class Write(CreateView):
-    model = Post  # model
-    form_class = PostForm  # form
-    success_url = reverse_lazy("blog:list")  # url to send when succeed
+# class Write(CreateView):
+#     model = Post  # model
+#     form_class = PostForm  # form
+#     success_url = reverse_lazy("blog:list")  # url to send when succeed
+
+
+class Write(LoginRequiredMixin, View):
+    # Mixin: LoginRequiredMixin
+    def get(self, request):
+        form = PostForm()
+        context = {"form": form}
+        return render(request, "blog/post_form.html", context)
+
+    def post(self, request):
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)  # commit=False 변수 할당만 우선 지정.
+            post.writer = request.user
+            post.save()
+            return redirect("blog:list")
+        form.add_error(None, "폼이 유효하지 않습니다")
+        context = {"form": form}
+        return render(request, "blog/post_form.html")
 
 
 class Detail(DetailView):
@@ -177,20 +198,19 @@ class CommentDelete(View):
         return redirect("blog:detail", pk=post_id)
 
 
-### HashTag
+### Tag
 class HashTagWrite(View):
     def post(self, request, pk):
-        post = get_object_or_404(Post, pk=pk)
         form = HashTagForm(request.POST)
-
         if form.is_valid():
-            hashtag = form.save(commit=False)
-            hashtag.post = post
-            hashtag.save()
-            return redirect("blog:detail", pk=post.pk)
-        else:
-            # 폼에 문제가 있다면, 오류 메시지를 출력합니다.
-            pass
+            # 사용자에게 태그 내용을 받아옴
+            name = form.cleaned_data["name"]
+            # 해당 아이디에 해당하는 글 불러옴
+            post = Post.objects.get(pk=pk)
+            # 댓글 객체 생성, create 메서드를 사용할 때는 save 필요 없음
+            hashtag = HashTag.objects.create(post=post, name=name)
+            # comment = Comment(post=post) -> comment.save()
+            return redirect("blog:detail", pk=pk)
 
 
 # class HashTagDelete(View):
