@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views import View
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from .models import Post, Comment, HashTag
 from .forms import PostForm, CommentForm, HashTagForm
 from django.urls import reverse_lazy, reverse
@@ -221,8 +222,18 @@ class CommentWrite(View):
             # 유저 정보 가져오기
             writer = request.user
             # 댓글 객체 생성, create 메서드를 사용할 때는 save 필요 없음
-            comment = Comment.objects.create(post=post, content=content, writer=writer)
-            # comment = Comment(post=post) -> comment.save()
+            try:
+                comment = Comment.objects.create(post=post, content=content, writer=writer)
+                # 생성할 값이 이미 있다면 오류 발생
+                # Unique 값이 중복될 때
+                # 필드 값이 비어있을 때
+                # 외래키 관련 데이터비이스 오류
+                # get_or_create() -> 2가지 경우의 리턴값
+                # comment, created = Comment.objects.get_or_create(post=post, content=content, writer=writer)
+                # if created: print('생성되었습니다') else: print('이미 있습니다')
+                # comment = Comment(post=post) -> comment.save()
+            except ObjectDoesNotExist as e:
+                print('Error occurred', str(e))
             return redirect('blog:detail', pk=pk)
         
         # form.add_error(None, '폼이 유효하지 않습니다.')
