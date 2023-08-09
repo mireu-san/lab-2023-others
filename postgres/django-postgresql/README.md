@@ -6,3 +6,6 @@ stuck at 6. Setting up a database server (pg admin v7 - server connection issue)
 https://docs.djangoproject.com/en/4.2/ref/databases/#postgresql-notes
 
 https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-DATABASES
+
+![image1](a1.jpg)
+![image2](a2.jpg)
