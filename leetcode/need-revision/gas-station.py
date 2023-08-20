@@ -22,3 +22,6 @@ class Solution:
                 if cost[i] > gas[i]:
                     print("inside", j)
         return -1
+    
+
+    # https://leetcode.com/problems/gas-station/description/
