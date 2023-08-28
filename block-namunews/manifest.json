@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "Block Element",
+    "version": "1.0",
+    "description": "Blocks specific HTML elements by their ID.",
+    "content_scripts": [
+      {
+        "matches": ["https://arca.live/*"],
+        "js": ["content.js"]
+      }
+    ]
+  }
+  
