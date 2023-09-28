@@ -1,0 +1,9 @@
+def solution(a, b):
+    if int(str(a) + str(b)) >= 2*a*b:
+        return int(str(a) + str(b))
+    else:
+        return 2*a*b
+    
+    return answer
+
+    # https://school.programmers.co.kr/learn/courses/30/lessons/181938?language=python3
