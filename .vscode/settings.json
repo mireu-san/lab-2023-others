@@ -24,5 +24,6 @@
     "python.formatting.provider": "black",
     "files.associations": {
         "stdio.h": "c"
-    }
+    },
+    "java.compile.nullAnalysis.mode": "automatic"
 }
