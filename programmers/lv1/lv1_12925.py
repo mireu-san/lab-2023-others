@@ -12,6 +12,7 @@ def solution(s):
             result *= -1
         else:
             # 각 숫자에 해당하는 자릿수의 가치(10의 idx 제곱)를 곱하여 결과에 더함
+            # 즉, 경우의 수를 감안 한 것.
             result += int(number) * (10**idx)
     return result
 
