@@ -11,4 +11,14 @@ public class TestRestController {
     public String testMessage() {
         return "This is test. Run by Java Spring";
     }
+
+    @GetMapping("/workout")
+    public String getDailyWorkout() {
+        return "printed by getDailyWorkout, public String.";
+    }
+
+    @GetMapping("/fortune")
+    public String getDailyFortune() {
+        return "Today is lucky day";
+    }
 }
