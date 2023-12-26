@@ -15,3 +15,10 @@ def solution(seoul):
 #     print("김서방은 {}에 있다")
 
 # https://school.programmers.co.kr/learn/courses/30/lessons/12919
+
+# 다른 답안
+
+
+def solution(seoul):
+    answer = ""
+    return "김서방은 %d에 있다" % seoul.index("Kim")
